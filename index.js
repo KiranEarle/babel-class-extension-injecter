@@ -5,5 +5,10 @@ class JourneyStore {
 const journeyStore = new JourneyStore()
 
 class RedStore {
-  property = 'RedstorePropert'
+  property = 'RedstoreProperty'
+  anotherProperty ='AnotherProperty'
+}
+
+class BlueStore {
+  property = 'BlueStoreProperty'
 }

@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const getClassExtentions = require('./getClassExtentions')
 const getClassesWithExtentions = require('./getClassesWithExtentions')
+const setClassPropertyAssignment = require('./setClassPropertyAssignment')
 
 const stringifiedCode = fs.readFileSync(path.resolve(__dirname, '../class.extentions.js')).toString()
 
@@ -17,15 +18,12 @@ const extentions = parsedCode.filter(code => {
 })[0]
 
 
-// console.log(extentions.expression.right.properties)
-
 const classesWithExtentions = getClassesWithExtentions(extentions)
+const classExtensions = getClassExtentions(extentions).map(node => { return node.properties.map(prop => { return prop.value }) })
 
-const classExtentions = getClassExtentions(extentions)
 
-console.log(classesWithExtentions)
-// console.log(classExtentions)
 
+console.log(classExtensions)
 
 module.exports = function(babel) {
   const { types: t } = babel;
@@ -34,7 +32,16 @@ module.exports = function(babel) {
     visitor: {
       Class: {
         enter(path) {
-          console.log(path)
+          classesWithExtentions.map(className => {
+            if (path.node.id.name === className) {
+              path.node.body.body.map(prop => { 
+                // console.log(prop.body)
+                prop.body.body.map(nodeProp => {
+                  console.log(nodeProp.expression)
+                })
+              })
+            }
+          })
         }
       },
     }
