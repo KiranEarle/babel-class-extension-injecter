@@ -1,0 +1,25 @@
+{
+  "name": "classinjector",
+  "version": "0.0.1",
+  "description": "Babel plugin that injects properties on a class instance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiran Earle",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "babel-plugin-console": "^0.2.1",
+    "babel-plugin-tester": "^9.2.0",
+    "babel-types": "^6.26.0",
+    "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.11.5",
+    "@babel/template": "^7.10.4"
+  }
+}
