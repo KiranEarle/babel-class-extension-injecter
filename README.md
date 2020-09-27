@@ -1,0 +1,1 @@
+# babel-class-extension-injecter
