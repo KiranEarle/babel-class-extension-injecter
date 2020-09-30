@@ -1,29 +1,8 @@
 const parser = require('@babel/parser')
+const generate = require('@babel/generator').default
 const fs = require('fs')
 const path = require('path')
-const getClassExtentions = require('./getClassExtentions')
-const getClassesWithExtentions = require('./getClassesWithExtentions')
-const setClassPropertyAssignment = require('./setClassPropertyAssignment')
-
-const stringifiedCode = fs.readFileSync(path.resolve(__dirname, '../class.extentions.js')).toString()
-
-const parsedCode = parser.parse(stringifiedCode, {
-  sourceType: "module",
-  cwd: __dirname,
-  plugins: ['classProperties'],
-}).program.body
-
-const extentions = parsedCode.filter(code => {
-  return code.type === 'ExpressionStatement'
-})[0]
-
-
-const classesWithExtentions = getClassesWithExtentions(extentions)
-const classExtensions = getClassExtentions(extentions).map(node => { return node.properties.map(prop => { return prop.value }) })
-
-
-
-console.log(classExtensions)
+const find = require('find')
 
 module.exports = function(babel) {
   const { types: t } = babel;
@@ -32,16 +11,32 @@ module.exports = function(babel) {
     visitor: {
       Class: {
         enter(path) {
-          classesWithExtentions.map(className => {
-            if (path.node.id.name === className) {
-              path.node.body.body.map(prop => { 
-                // console.log(prop.body)
-                prop.body.body.map(nodeProp => {
-                  console.log(nodeProp.expression)
-                })
-              })
+          const extentionPath = find.fileSync(/\.extentions.js$/, path.hub.file.opts.sourceRoot)
+          console.log(extentionPath)
+          const extentionStringified = fs.readFileSync(extentionPath[0]).toString()
+          const extentionCode = parser.parse(extentionStringified, {
+            sourceType: "module",
+            cwd: __dirname,
+            plugins: ['classProperties'],
+          })
+          extentionCode.program.body.map(node => {
+            if(node.type === 'ExpressionStatement') {
+              console.log(node.expression.right.properties)
             }
           })
+          // path.node.body.body.filter(methods => {
+          //   console.log(methods.body)
+          // })
+          // classesWithExtentions.map(className => {
+          //   if (path.node.id.name === className) {
+          //     path.node.body.body.map(prop => { 
+          //       mappedExtensions[className].map(ext => {
+          //         // prop.body.body.push(ext)
+          //         // console.log(prop.body.body)
+          //       })
+          //     })
+          //   }
+          // })
         }
       },
     }

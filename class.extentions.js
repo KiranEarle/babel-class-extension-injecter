@@ -7,6 +7,7 @@ module.exports = {
     objects: {},
   },
   RedStore: {
+    strings: 'strings',
     notification: new Notification()
   },
 }

@@ -1,14 +1,12 @@
-class JourneyStore {
-  property = 'journeyStorePropert'
-}
+import JourneyStore from './JourneyStore'
+import RedStore from './RedStore'
+import BlueStore from './BlueStore'
+
 
 const journeyStore = new JourneyStore()
 
-class RedStore {
-  property = 'RedstoreProperty'
-  anotherProperty ='AnotherProperty'
-}
+const redStore = new RedStore() 
 
-class BlueStore {
-  property = 'BlueStoreProperty'
-}
+const blueStore = new BlueStore()
+
+// console.log(journeyStore, redStore, blueStore)

@@ -1,5 +1,6 @@
 module.exports = function(api) {
-  api.cache(true)
+  api.cache(false)
+  const presets = ['@babel/preset-env']
   const plugins = [
     [
       '@babel/plugin-proposal-class-properties',
@@ -15,5 +16,6 @@ module.exports = function(api) {
 
   return {
     plugins,
+    presets,
   }
 }
